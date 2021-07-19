@@ -3,7 +3,7 @@ from typing import Optional
 from jose import JWTError, jwt
 from model import TokenData
 
-SECRET_KEY = '7b82e1d300da121b2470deb960b1b802022607de6bf71816123c0d7742fa5f48'
+SECRET_KEY = ''
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
