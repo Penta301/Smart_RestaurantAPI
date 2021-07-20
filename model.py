@@ -30,6 +30,7 @@ class Restaurant(BaseModel):
     tables: Optional[int] = None 
     food: Optional[list] = None
     requests: Optional[list] = None
+    csrf_token: str
 
 class Show_Restaurant(BaseModel):
     name:str
@@ -38,9 +39,13 @@ class Show_Restaurant(BaseModel):
     requests: Optional[list] = None
 
 class Token(BaseModel):
-    access_token:str
-    token_type:str
+    name:str
+    password:str
 
-class TokenData(BaseModel):
-    email:Optional[str] = None
-
+class Settings(BaseModel):
+   authjwt_secret_key: str = '7b82e1d300da121b2470deb960b1b802022607de6bf71816123c0d7742fa5f48'
+   authjwt_access_token_expires: int = 3600
+   authjwt_token_location: set = {"cookies"}
+   authjwt_cookie_secure: bool = False
+   authjwt_cookie_csrf_protect: bool = True
+   authjwt_access_csrf_cookie_key='csrf_access_token'

@@ -2,33 +2,42 @@ import sys
 sys.path.append('..')
 from hashing import Hash
 from fastapi import HTTPException, APIRouter, Depends
-from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.responses import JSONResponse
+from fastapi_jwt_auth import AuthJWT
 from database import authenticate_operation, collection_user
-from backend.JWTtoken import create_access_token
+from backend.model import Token, Settings
 
 router = APIRouter(
     prefix="/api/authentication",
     tags=['authentication']
 )
 
+@AuthJWT.load_config
+def get_config():
+    return Settings()
+
 @router.post('/')
-async def authenticate(user:OAuth2PasswordRequestForm = Depends()):
-    response = await authenticate_operation(collection_user, user.username)
+async def authenticate(user:Token, Authorize: AuthJWT = Depends()):
+    response = await authenticate_operation(collection_user, user.name)
     if not response:
-        raise HTTPException(404, f"That user with the email: {user.username}, doesn't exist")
+        raise HTTPException(404, f"That user with the email: {user.name}, doesn't exist")
     
     verify_pass = Hash.verify(user.password, response["password"])   
     
     if not verify_pass: 
         raise HTTPException(404, f"Invalid Credentials")
 
-    access_token = create_access_token(data={"sub": user.username})
+    access_token = Authorize.create_access_token(subject=user.name)
+    refresh_token = Authorize.create_refresh_token(subject=user.name)
 
-    access_token = {"access_token": access_token, "token_type": "bearer"}
+    Authorize.set_access_cookies(access_token)
+    Authorize.set_refresh_cookies(refresh_token)
 
-    return_response = JSONResponse(content=access_token)
+    msg = Authorize.get_raw_jwt()
+    return {"msg": 'Successfully Login'}
 
-    return_response.set_cookie(key='JWTOKEN', value=access_token, httponly=True, max_age=3600)
-
-    return return_response
+@router.get("/get_jwt")
+async def test(Authorize: AuthJWT = Depends()):
+    Authorize.jwt_required()
+    
+    msg = Authorize.get_raw_jwt()
+    return {"crf": msg['csrf']}
