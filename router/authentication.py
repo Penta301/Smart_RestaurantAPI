@@ -1,4 +1,5 @@
 import sys
+import time 
 sys.path.append('..')
 from hashing import Hash
 from fastapi import HTTPException, APIRouter, Depends
@@ -27,17 +28,15 @@ async def authenticate(user:Token, Authorize: AuthJWT = Depends()):
         raise HTTPException(404, f"Invalid Credentials")
 
     access_token = Authorize.create_access_token(subject=user.name)
-    refresh_token = Authorize.create_refresh_token(subject=user.name)
 
-    Authorize.set_access_cookies(access_token)
-    Authorize.set_refresh_cookies(refresh_token)
+    cookie = Authorize.set_access_cookies(access_token)
 
-    msg = Authorize.get_raw_jwt()
-    return {"msg": 'Successfully Login'}
+    return {"jwt": access_token}
 
-@router.get("/get_jwt")
+@router.get("/get_csrf")
 async def test(Authorize: AuthJWT = Depends()):
-    Authorize.jwt_required()
+    Authorize.jwt_required(csrf_token=None)
     
     msg = Authorize.get_raw_jwt()
-    return {"crf": msg['csrf']}
+    print(msg)
+    return {"csrf": msg}
