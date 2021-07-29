@@ -1,11 +1,13 @@
 from pydantic import BaseModel
-from typing import ByteString, Optional
+from typing import Optional
 
 class Food(BaseModel):
+    img:str
     name:str
     price:int
+    restaurant: str
     available:Optional[bool] = True
-    cantidad: Optional[int] = None
+    amount: Optional[int] = None
     delay: Optional[int] = None
     desc: Optional[str] = None
 
@@ -47,5 +49,3 @@ class Settings(BaseModel):
    authjwt_access_token_expires: int = 3600
    authjwt_token_location: set =  {'headers'}
    authjwt_cookie_secure: bool = False
-   authjwt_cookie_csrf_protect: bool = True
-   authjwt_access_csrf_cookie_key='csrf_access_token'

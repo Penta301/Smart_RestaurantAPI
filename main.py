@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from router import authentication, restaurant
+from router import authentication, restaurant, user, food
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi.responses import JSONResponse
 from fastapi import Request
@@ -17,7 +17,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.include_router(user.router)
+app.include_router(user.router)
+app.include_router(food.router)
 app.include_router(authentication.router)
 app.include_router(restaurant.router)
 

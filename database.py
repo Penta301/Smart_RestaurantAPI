@@ -2,6 +2,7 @@ import motor.motor_asyncio
 from datetime import datetime 
 from model import Food, Request, Restaurant
 
+
 client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017/')
 database = client.Restaurant
 collection_restaurant = database.restaurant
@@ -16,14 +17,20 @@ async def fetch_all(collection, model):
         operations.append(model(**document))
     return operations
 
-async def create_operation(model, collection):
+async def create_operation(model, collection, verify = False):
     document = model
 
 # Revisar si existe el usuario
 
-    user = await collection.find_one({"name":document["name"]})
-    if user:
-        return "error_name"
+    try:    
+        if verify:
+            
+            user = await collection.find_one({"name":document["name"]})
+            if user:
+                return "error_name"
+
+    except AssertionError as error:
+        print(error)
 
     result = await collection.insert_one(document)
     return document

@@ -24,8 +24,8 @@ async def get_all_operations(get_current_user:AuthJWT = Depends()):
 
 @router.post("/restaurant_create/", response_model = Show_Restaurant)
 async def post_todo(restaurant: Restaurant, get_current_user:AuthJWT = Depends()):
-    restaurant = restaurant.dict()
     get_current_user.jwt_required()
+    restaurant = restaurant.dict()
     response = await create_operation(restaurant, collection_restaurant)
     if response == "error_name":
         raise HTTPException(400, "That username exist")

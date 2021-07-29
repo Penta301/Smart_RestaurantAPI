@@ -221,11 +221,11 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:6ea4225448786f3d6fae737713789f87631a7455f65580de0a4a2e50471060d9",
-                "sha256:85d8aee8c3c46171f4cb7bb3651425a42c07cb9183345d100ef55d88ca2ce15f"
+                "sha256:24f45d65e589db3bab162c02a1e2e8b798c098861b1fa3e266efeb71b4faa8e2",
+                "sha256:b05f5af77af3b21cab896b8dade8b383b2d2f254caae4681a56313e29196f1ac"
             ],
             "index": "pypi",
-            "version": "==0.66.0"
+            "version": "==0.67.0"
         },
         "fastapi-jwt-auth": {
             "hashes": [
@@ -247,16 +247,15 @@
                 "sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a",
                 "sha256:467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"
             ],
-            "markers": "python_version >= '3'",
             "version": "==3.2"
         },
         "motor": {
             "hashes": [
-                "sha256:1196db507142ef8f00d953efa2f37b39335ef2d72af6ce4fbccfd870b65c5e9f",
-                "sha256:839c11a43897dbec8e5ba0e87a9c9b877239803126877b2efa5cef89aa6b687a"
+                "sha256:2701f71129fac70d40291a2226bd3ce8682f529711ce2e463d5035d8e937cf9c",
+                "sha256:eafa05a7233f3373ee110b1d7ad0469f7aa942dcd60cb65f7474ae41628a0e0d"
             ],
             "index": "pypi",
-            "version": "==2.4.0"
+            "version": "==2.5.0"
         },
         "multidict": {
             "hashes": [

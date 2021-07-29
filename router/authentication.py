@@ -30,10 +30,3 @@ async def authenticate(user:Token, Authorize: AuthJWT = Depends()):
     access_token = Authorize.create_access_token(subject=user.name)
 
     return {"jwt": access_token}
-
-@router.get("/get_csrf")
-async def test(Authorize: AuthJWT = Depends()):
-    Authorize.jwt_required(csrf_token=None)
-    
-    msg = Authorize.get_jwt_subject()
-    return {"user": msg}
