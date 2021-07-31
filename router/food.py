@@ -6,6 +6,7 @@ from backend.model import Food
 from backend.database import (
     collection_food, 
     create_operation,
+    fetch_all
 )
 
 router = APIRouter(
@@ -27,5 +28,8 @@ async def post_todo(food: Food, user:AuthJWT = Depends()):
         return response
     raise HTTPException(400, 'Something wet wrong')
 
-    
 
+@router.get('/get_food/{where}/{restaurant}') 
+async def get_food(restaurant:str,where:str):
+    response = await fetch_all(collection_food, Food, where, restaurant)
+    return response

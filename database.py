@@ -1,6 +1,4 @@
 import motor.motor_asyncio 
-from datetime import datetime 
-from model import Food, Request, Restaurant
 
 
 client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017/')
@@ -10,9 +8,14 @@ collection_food = database.restaurant_food
 collection_request = database.restaurant_request
 collection_user = database.user
 
-async def fetch_all(collection, model):
+async def fetch_all(collection, model, where, specific):
+    if not specific:
+        cursor = collection.find({})
+
+    else:
+        cursor = collection.find({where:specific})
+    
     operations=[]
-    cursor = collection.find({})
     async for document in cursor:
         operations.append(model(**document))
     return operations

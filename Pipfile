@@ -16,6 +16,8 @@ bcrypt = "*"
 python-multipart = "*"
 multipart = "*"
 fastapi-jwt-auth = "*"
+datetime = "*"
+mercadopago = "*"
 
 [dev-packages]
 

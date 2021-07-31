@@ -32,7 +32,6 @@ class Restaurant(BaseModel):
     tables: Optional[int] = None 
     food: Optional[list] = None
     requests: Optional[list] = None
-    csrf_token: str
 
 class Show_Restaurant(BaseModel):
     name:str
